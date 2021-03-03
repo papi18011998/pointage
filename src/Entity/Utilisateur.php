@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,32 @@ class Utilisateur
      * @ORM\Column(type="string", length=255)
      */
     private $telephone;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Pointage::class, mappedBy="utilisateur")
+     */
+    private $pointage;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Incident::class, mappedBy="utilisateur")
+     */
+    private $commentaire;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Vehicule::class, cascade={"persist", "remove"})
+     */
+    private $vehicule;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Depart::class, cascade={"persist", "remove"})
+     */
+    private $depart;
+
+    public function __construct()
+    {
+        $this->pointage = new ArrayCollection();
+        $this->commentaire = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +131,90 @@ class Utilisateur
     public function setTelephone(string $telephone): self
     {
         $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Pointage[]
+     */
+    public function getPointage(): Collection
+    {
+        return $this->pointage;
+    }
+
+    public function addPointage(Pointage $pointage): self
+    {
+        if (!$this->pointage->contains($pointage)) {
+            $this->pointage[] = $pointage;
+            $pointage->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removePointage(Pointage $pointage): self
+    {
+        if ($this->pointage->removeElement($pointage)) {
+            // set the owning side to null (unless already changed)
+            if ($pointage->getUtilisateur() === $this) {
+                $pointage->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Incident[]
+     */
+    public function getCommentaire(): Collection
+    {
+        return $this->commentaire;
+    }
+
+    public function addCommentaire(Incident $commentaire): self
+    {
+        if (!$this->commentaire->contains($commentaire)) {
+            $this->commentaire[] = $commentaire;
+            $commentaire->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Incident $commentaire): self
+    {
+        if ($this->commentaire->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getUtilisateur() === $this) {
+                $commentaire->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getVehicule(): ?Vehicule
+    {
+        return $this->vehicule;
+    }
+
+    public function setVehicule(?Vehicule $vehicule): self
+    {
+        $this->vehicule = $vehicule;
+
+        return $this;
+    }
+
+    public function getDepart(): ?Depart
+    {
+        return $this->depart;
+    }
+
+    public function setDepart(?Depart $depart): self
+    {
+        $this->depart = $depart;
 
         return $this;
     }
