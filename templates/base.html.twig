@@ -6,9 +6,8 @@
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
-           <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-            <link rel="stylesheet" type="text/css" href="style.css">
-
+            <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+            <link rel="stylesheet" type="text/css" href="{{asset('style.css')}}">
         {% endblock %}
 
         {% block javascripts %}
@@ -18,4 +17,9 @@
     <body>
         {% block body %}{% endblock %}
     </body>
+    <footer>
+    {% block footer %}
+        <span class="slogan col-md-6 col-sm-12 container ">Croquez un jour, craquez toujours !!!</span>
+    {% endblock %}
+    </footer>
 </html>

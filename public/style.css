@@ -1,0 +1,32 @@
+body{
+    min-height: 100%;
+}
+.top{
+    width:100%;
+    margin-top: 20px;
+    border-radius: 20px 20px 20px 20px;
+    background-color: #e37222;
+    font-family: 'Lucida Calligraphy', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.bottom{
+    font-family: 'Lucida Calligraphy', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;  
+}
+.slogan{
+    font-family: 'Lucida Calligraphy', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;    
+    text-align: center;
+    margin-left: 37%;
+}
+@media screen and (max-width: 480px) {
+    .top{
+        display: none;    
+    }
+    .bottom{
+        margin-top: 90px;
+    }
+    .effacer{
+        margin-top: 10px;
+    }
+    .slogan{
+        margin-left: 15%;
+    }
+}
