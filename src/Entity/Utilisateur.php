@@ -1,14 +1,18 @@
 <?php
 
 namespace App\Entity;
-
-use App\Repository\UtilisateurRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraint as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
+ * @Assert\UniqueEntity(
+ * fields={login},
+ * message="Cet utilisateur existe déjà dans la base"
+ * )
  */
 class Utilisateur
 {
@@ -36,8 +40,14 @@ class Utilisateur
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min="8",minMessage="Votre mot de passe doit compter au minimum 8 caractères")
+     * @Assert\EqualTo(protertyPath="confirmPassword")
      */
     private $password;
+    /**
+     *@Assert\EqualTo(protertyPath="confirmPassword", message="Les mots de passe ne correspondent pas")
+     */
+    private $confirmPassword;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -63,6 +73,12 @@ class Utilisateur
      * @ORM\OneToOne(targetEntity=Depart::class, cascade={"persist", "remove"})
      */
     private $depart;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="utilisateurs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $role;
 
     public function __construct()
     {
@@ -218,4 +234,30 @@ class Utilisateur
 
         return $this;
     }
+
+    public function getRoles(): ?Role
+    {
+        return $this->role;
+    }
+
+    public function setRole(?Role $role): self
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+    private $username;
+    public function getUsername()
+    {
+        return $this->login;
+    }
+    public function getSalt()
+    {
+        // leaving blank - I don't need/have a password!
+    }
+    public function eraseCredentials()
+    {
+        // leaving blank - I don't need/have a password!
+
+}
 }

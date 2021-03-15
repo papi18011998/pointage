@@ -5,18 +5,18 @@
 </div>
 <div class="bottom">
 <center>
- <form  method="post" class="col-md-6 col-sm-12 col-lg-6">
+ <form  method="post" class="col-md-6 col-sm-12 col-lg-6" action="{{path('userLogin')}}">
    <div class="container col-md-12">
         <div class="form-group">
-            <label for="username"><b>Nom d'utilisateur</b></label>
-            <input type="text" placeholder="Mettez votre Login" name="username" class="form-control" required>
+            <label for="_username"><b>Nom d'utilisateur</b></label>
+            <input type="text" placeholder="Mettez votre Login" name="_username" class="form-control" required>
         </div>
         <div class="form-group">
-            <label for="password"><b>Mot de passe</b></label>
-            <input type="password" placeholder="Mettez votre mot de passe" name="password" class="form-control" required>
+            <label for="_password"><b>Mot de passe</b></label>
+            <input type="password" placeholder="Mettez votre mot de passe" name="_password" class="form-control" required>
         </div>
-        <input type="submit" value="Se connecter" name="connecter" class="btn btn-success col-md-3 col-sm-6">
-        <input type="reset" value="Effacer" name="effacer" class="btn btn-danger col-md-3 col-sm-6 effacer">
+        <input type="submit" value="Se connecter" name="connecter" class="btn btn-success col-md-3 col-sm-6" style="margin-bottom:5px;">
+        <input type="reset" value="Effacer" name="effacer" class="btn btn-danger col-md-3 col-sm-6">
    </div>
 </center>
 </div>

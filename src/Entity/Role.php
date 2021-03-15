@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RoleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,9 +25,14 @@ class Role
     private $libelle;
 
     /**
-     * @ORM\OneToOne(targetEntity=Utilisateur::class, cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Utilisateur::class, mappedBy="role")
      */
-    private $utlisateurs;
+    private $utilisateurs;
+
+    public function __construct()
+    {
+        $this->utilisateurs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -44,15 +51,35 @@ class Role
         return $this;
     }
 
-    public function getUtlisateurs(): ?Utilisateur
+    /**
+     * @return Collection|Utilisateur[]
+     */
+    public function getUtilisateurs(): Collection
     {
-        return $this->utlisateurs;
+        return $this->utilisateurs;
     }
 
-    public function setUtlisateurs(?Utilisateur $utlisateurs): self
+    public function addUtilisateur(Utilisateur $utilisateur): self
     {
-        $this->utlisateurs = $utlisateurs;
+        if (!$this->utilisateurs->contains($utilisateur)) {
+            $this->utilisateurs[] = $utilisateur;
+            $utilisateur->setRole($this);
+        }
 
         return $this;
     }
+
+    public function removeUtilisateur(Utilisateur $utilisateur): self
+    {
+        if ($this->utilisateurs->removeElement($utilisateur)) {
+            // set the owning side to null (unless already changed)
+            if ($utilisateur->getRole() === $this) {
+                $utilisateur->setRole(null);
+            }
+        }
+
+        return $this;
+    }
+
+   
 }

@@ -8,8 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UtilisateurController extends AbstractController
 {
+    //Espace authentification de l'utilisateur
     /**
-     * @Route("/", name="utilisateur")
+     * @Route("/", name="userLogin")
      */
     public function index(): Response
     {
@@ -17,4 +18,8 @@ class UtilisateurController extends AbstractController
             'controller_name' => 'UtilisateurController',
         ]);
     }
+    /**
+     * @Route("/logout", name="userDisconnect")
+     */
+    public function logout(){}
 }
