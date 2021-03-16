@@ -4,17 +4,17 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UtilisateurRepository;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Validator\Constraint as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
- * @Assert\UniqueEntity(
- * fields={login},
- * message="Cet utilisateur existe déjà dans la base"
+ * @UniqueEntity("login",message="Cet utilisateur existe déjà dans la base"
  * )
  */
-class Utilisateur
+class Utilisateur implements UserInterface
 {
     /**
      * @ORM\Id
@@ -41,11 +41,11 @@ class Utilisateur
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="8",minMessage="Votre mot de passe doit compter au minimum 8 caractères")
-     * @Assert\EqualTo(protertyPath="confirmPassword")
+     * @Assert\EqualTo(propertyPath="confirmPassword")
      */
     private $password;
     /**
-     *@Assert\EqualTo(protertyPath="confirmPassword", message="Les mots de passe ne correspondent pas")
+     *@Assert\EqualTo(propertyPath="password", message="Les mots de passe ne correspondent pas")
      */
     private $confirmPassword;
 
@@ -235,9 +235,12 @@ class Utilisateur
         return $this;
     }
 
-    public function getRoles(): ?Role
+    public function getRole(): ?Role
     {
         return $this->role;
+    }
+    public function getRoles(){
+        return $this->role= ['ROLE_'.strtoupper($this->getRole()->getLibelle())];
     }
 
     public function setRole(?Role $role): self
