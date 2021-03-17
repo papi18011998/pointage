@@ -20,6 +20,7 @@ security:
             form_login:
                 login_path: userLogin
                 check_path: userLogin
+                default_target_path: roles
             logout:
                 path: userDisconnect
                 target: userLogin
