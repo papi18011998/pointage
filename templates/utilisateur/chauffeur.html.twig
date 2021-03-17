@@ -1,1 +1,20 @@
 {% extends "base.html.twig" %}
+{% block body %}
+<div class="userInformation">
+<span>Chauffeur : {{ app.user.prenom}} {{ app.user.nom}}</span>
+<span>Véhicule : {{ app.user.vehicule}}</span>
+<span>Téléphone : {{ app.user.telephone}}</span>
+<button class="btn btn-danger">Se déconnecter</button>
+</div>
+<div class="sideBar">
+    <button class="btn btn-primary col-md-12 boutton">Je commence ma journée</button>
+    <button class="btn btn-primary col-md-12 boutton">Faire un pointage</button>
+    <button class="btn btn-primary col-md-12 boutton">Déclarer un incident</button>
+    <button class="btn btn-primary col-md-12 boutton">Changer de véhicule</button>
+    <button class="btn btn-primary col-md-12 boutton">Liste de mes tournées</button>
+    <button class="btn btn-primary col-md-12 boutton">J'ai fini ma journée</button>
+</div>
+<div class="contentVariable">
+rf=vmr)rflvrvlvvl
+</div>
+{% endblock %}

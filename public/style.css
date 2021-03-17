@@ -30,3 +30,23 @@ body{
         margin-left: 15%;
     }
 }
+.userInformation{
+    width: 100%;
+    height: 100px;
+    background-color: red;
+}
+.sideBar{
+    width: 20%;
+    background-color: green;
+    float: left;
+}
+.contentVariable{
+    width: 80%;
+    height: 100%;
+    background-color: rgb(141, 148, 141);
+    float: left;
+}
+.boutton{
+    display:block;
+    margin-bottom: 12%;
+}
