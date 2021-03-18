@@ -37,16 +37,17 @@ body{
 }
 .sideBar{
     width: 20%;
-    background-color: green;
+    height:1000px;
     float: left;
 }
 .contentVariable{
     width: 80%;
-    height: 100%;
-    background-color: rgb(141, 148, 141);
     float: left;
 }
 .boutton{
     display:block;
     margin-bottom: 12%;
+}
+.startMyDay,.makeScore,.reportIncident,.changeVehicle,.tourList,.finishDay{
+    display: none;
 }

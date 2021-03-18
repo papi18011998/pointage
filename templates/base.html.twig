@@ -11,12 +11,10 @@
         {% endblock %}
 
         {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
+           <script src="{{asset('jquery-min.js')}}"></script>
         {% endblock %}
     </head>
     <body>
-        
         {% block body %}{% endblock %}
-        <span class="slogan col-md-6 col-sm-12 container ">Croquez un jour, craquez toujours !!!</span>
     </body>
 </html>

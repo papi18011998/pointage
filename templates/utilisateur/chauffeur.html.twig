@@ -7,14 +7,52 @@
 <button class="btn btn-danger">Se déconnecter</button>
 </div>
 <div class="sideBar">
-    <button class="btn btn-primary col-md-12 boutton">Je commence ma journée</button>
-    <button class="btn btn-primary col-md-12 boutton">Faire un pointage</button>
-    <button class="btn btn-primary col-md-12 boutton">Déclarer un incident</button>
-    <button class="btn btn-primary col-md-12 boutton">Changer de véhicule</button>
-    <button class="btn btn-primary col-md-12 boutton">Liste de mes tournées</button>
-    <button class="btn btn-primary col-md-12 boutton">J'ai fini ma journée</button>
+    <button class="btn btn-secondary col-md-12 boutton startMyDayButton">Je commence ma journée</button>
+    <button class="btn btn-secondary col-md-12 boutton makeScoreButton">Faire un pointage</button>
+    <button class="btn btn-secondary col-md-12 boutton reportIncidentButton">Déclarer un incident</button>
+    <button class="btn btn-secondary col-md-12 boutton changeVehicleButton">Changer de véhicule</button>
+    <button class="btn btn-secondary col-md-12 boutton tourListButton">Liste de mes tournées</button>
+    <button class="btn btn-secondary col-md-12 boutton finishDayButton">J'ai fini ma journée</button>
 </div>
-<div class="contentVariable">
-rf=vmr)rflvrvlvvl
-</div>
+<div class="contentVariable"></div>
+<div class="startMyDay">1</div>
+<div class="makeScore">2</div>
+<div class="reportIncident">3</div>
+<div class="changeVehicle">4</div>
+<div class="tourList">5</div>
+<div class="finishDay">6</div>
+   <script>
+       $(document).ready(function(){
+        // Commencer ma journée
+         $('.startMyDayButton').click(function(){
+             $('.contentVariable').html("")
+             console.log($('.contentVariable').html($('.startMyDay').html()));
+         })
+        // Faire un pointage
+         $('.makeScoreButton').click(function(){
+             $('.contentVariable').html("")
+             console.log($('.contentVariable').html($('.makeScore').html()));
+         })
+        // Declarer un incident
+         $('.reportIncidentButton').click(function(){
+             $('.contentVariable').html("")
+             console.log($('.contentVariable').html($('.reportIncident').html()));
+         })
+        // Changer un véhicule
+         $('.changeVehicleButton').click(function(){
+             $('.contentVariable').html("")
+             console.log($('.contentVariable').html($('.changeVehicle').html()));
+         })
+        // Liste de mes tournées
+         $('.tourListButton').click(function(){
+             $('.contentVariable').html("")
+             console.log($('.contentVariable').html($('.tourList').html()));
+         })
+        // J'ai fini ma tournée
+         $('.finishDayButton').click(function(){
+             $('.contentVariable').html("")
+             console.log($('.contentVariable').html($('.finishDay').html()));
+         })
+       })
+   </script>
 {% endblock %}
