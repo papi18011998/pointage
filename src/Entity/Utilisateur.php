@@ -70,11 +70,6 @@ class Utilisateur implements UserInterface
     private $vehicule;
 
     /**
-     * @ORM\OneToOne(targetEntity=Depart::class, cascade={"persist", "remove"})
-     */
-    private $depart;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="utilisateurs")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -84,6 +79,7 @@ class Utilisateur implements UserInterface
     {
         $this->pointage = new ArrayCollection();
         $this->commentaire = new ArrayCollection();
+        $this->departs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -223,18 +219,6 @@ class Utilisateur implements UserInterface
         return $this;
     }
 
-    public function getDepart(): ?Depart
-    {
-        return $this->depart;
-    }
-
-    public function setDepart(?Depart $depart): self
-    {
-        $this->depart = $depart;
-
-        return $this;
-    }
-
     public function getRole(): ?Role
     {
         return $this->role;
@@ -250,6 +234,11 @@ class Utilisateur implements UserInterface
         return $this;
     }
     private $username;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Depart::class, mappedBy="utilisateur")
+     */
+    private $departs;
     public function getUsername()
     {
         return $this->login;
@@ -263,4 +252,34 @@ class Utilisateur implements UserInterface
         // leaving blank - I don't need/have a password!
 
 }
+
+    /**
+     * @return Collection|Depart[]
+     */
+    public function getDeparts(): Collection
+    {
+        return $this->departs;
+    }
+
+    public function addDepart(Depart $depart): self
+    {
+        if (!$this->departs->contains($depart)) {
+            $this->departs[] = $depart;
+            $depart->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDepart(Depart $depart): self
+    {
+        if ($this->departs->removeElement($depart)) {
+            // set the owning side to null (unless already changed)
+            if ($depart->getUtilisateur() === $this) {
+                $depart->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
 }
