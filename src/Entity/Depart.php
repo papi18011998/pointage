@@ -38,6 +38,12 @@ class Depart
      */
     private $utilisateur;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Vehicule::class, inversedBy="departs")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $vehicule;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +93,18 @@ class Depart
     public function setUtilisateur(?Utilisateur $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    public function getVehicule(): ?Vehicule
+    {
+        return $this->vehicule;
+    }
+
+    public function setVehicule(?Vehicule $vehicule): self
+    {
+        $this->vehicule = $vehicule;
 
         return $this;
     }

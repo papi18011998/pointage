@@ -20,13 +20,24 @@ class AppFixtures extends Fixture{
             $role->setLibelle("CHAUFFEUR");
             $manager->persist($role);
             $utilisateur = new Utilisateur();
-            $utilisateur->setPrenom("Papa Ibrahima")
+            $utilisateur->setPrenom("Djibril")
+                        ->setNom("DIEDHIOU")
+                        ->setLogin("djibi")
+                        ->setPassword($this->encoder->encodePassword($utilisateur,"Passer@1"))
+                        ->setTelephone("771234567")
+                        ->setRole($role);
+            $manager->persist($utilisateur);
+            $role1 = new Role();
+            $role1->setLibelle("ADMIN");            
+            $utilisateur1 = new Utilisateur();
+            $utilisateur1->setPrenom("Papa Ibrahima")
                         ->setNom("NDIAYE")
                         ->setLogin("papi")
                         ->setPassword($this->encoder->encodePassword($utilisateur,"Passer@1"))
                         ->setTelephone("776692537")
-                        ->setRole($role);
-            $manager->persist($utilisateur);
+                        ->setRole($role1);
+            $manager->persist($role1);
+            $manager->persist($utilisateur1);
         $manager->flush();
     }
 }

@@ -65,11 +65,6 @@ class Utilisateur implements UserInterface
     private $commentaire;
 
     /**
-     * @ORM\OneToOne(targetEntity=Vehicule::class, cascade={"persist", "remove"})
-     */
-    private $vehicule;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="utilisateurs")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -80,6 +75,7 @@ class Utilisateur implements UserInterface
         $this->pointage = new ArrayCollection();
         $this->commentaire = new ArrayCollection();
         $this->departs = new ArrayCollection();
+        $this->vehicules = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -207,18 +203,6 @@ class Utilisateur implements UserInterface
         return $this;
     }
 
-    public function getVehicule(): ?Vehicule
-    {
-        return $this->vehicule;
-    }
-
-    public function setVehicule(?Vehicule $vehicule): self
-    {
-        $this->vehicule = $vehicule;
-
-        return $this;
-    }
-
     public function getRole(): ?Role
     {
         return $this->role;
@@ -239,6 +223,11 @@ class Utilisateur implements UserInterface
      * @ORM\OneToMany(targetEntity=Depart::class, mappedBy="utilisateur")
      */
     private $departs;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Vehicule::class, inversedBy="utilisateurs")
+     */
+    private $vehicules;
     public function getUsername()
     {
         return $this->login;
@@ -279,6 +268,30 @@ class Utilisateur implements UserInterface
                 $depart->setUtilisateur(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Vehicule[]
+     */
+    public function getVehicules(): Collection
+    {
+        return $this->vehicules;
+    }
+
+    public function addVehicule(Vehicule $vehicule): self
+    {
+        if (!$this->vehicules->contains($vehicule)) {
+            $this->vehicules[] = $vehicule;
+        }
+
+        return $this;
+    }
+
+    public function removeVehicule(Vehicule $vehicule): self
+    {
+        $this->vehicules->removeElement($vehicule);
 
         return $this;
     }

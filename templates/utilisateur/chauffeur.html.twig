@@ -1,10 +1,13 @@
 {% extends "base.html.twig" %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block body %}
 <div class="userInformation">
 <span>Chauffeur : {{ app.user.prenom}} {{ app.user.nom}}</span>
-<span>Véhicule : {{ app.user.vehicule}}</span>
+<span>Véhicule : {% for vehicule in app.user.vehicules %}
+    {{vehicule}}
+{% endfor %}</span>
 <span>Téléphone : {{ app.user.telephone}}</span>
-<button class="btn btn-danger">Se déconnecter</button>
+<a class="btn btn-danger" href="{{path('userDisconnect')}}">Se déconnecter</a>
 </div>
 <div class="sideBar">
     <button class="btn btn-secondary col-md-12 boutton startMyDayButton">Je commence ma journée</button>
@@ -15,7 +18,11 @@
     <button class="btn btn-secondary col-md-12 boutton finishDayButton">J'ai fini ma journée</button>
 </div>
 <div class="contentVariable"></div>
-<div class="startMyDay">1</div>
+<div class="startMyDay">
+{{ form_start(form) }}
+<input type='submit' value='Demarrer'/>
+{{ form_end(form)}}
+</div>
 <div class="makeScore">2</div>
 <div class="reportIncident">3</div>
 <div class="changeVehicle">4</div>
