@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Depart;
 use App\Form\DepartType;
+use App\Entity\Utilisateur;
+use App\Form\UtilisateurType;
 use App\Repository\VehiculeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,20 +49,7 @@ class UtilisateurController extends AbstractController
     /**
      * @Route("/chauffeur", name="chauffeur")
      */
-    public function chauffeur(Request $request,EntityManagerInterface $manager,VehiculeRepository $vehicule){
-        $this->denyAccessUnlessGranted('ROLE_CHAUFFEUR',null,"Vos droits ne sont pas suffisant pour creer un compte");
-        $depart = new Depart();
-        $getChoosenVehicle = $vehicule->findOneByImmatriculation("DK-1234-AL");
-        $depart->setUtilisateur($this->getUser());
-        $depart->setJour( new \DateTime("now"));
-        $depart->setHeureDepart( new \DateTime("now"));
-        $form = $this->createForm(DepartType::class);
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-            // $manager->persist($depart);
-            dd($depart);
-        }
-        $manager->flush();
+    public function chauffeur(Request $request){
         return $this->render('utilisateur/chauffeur.html.twig',['form'=>$form->createView()]);
     }
     //----------------------------------Déconnexion de l'utilisateur--------------------------------//

@@ -41,13 +41,12 @@ class Utilisateur implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="8",minMessage="Votre mot de passe doit compter au minimum 8 caractères")
-     * @Assert\EqualTo(propertyPath="confirmPassword")
      */
     private $password;
-    /**
-     *@Assert\EqualTo(propertyPath="password", message="Les mots de passe ne correspondent pas")
-     */
-    private $confirmPassword;
+    // /**
+    //  *@Assert\EqualTo(propertyPath="password", message="Les mots de passe ne correspondent pas")
+    //  */
+    // private $confirmPassword;
 
     /**
      * @ORM\Column(type="string", length=255)
