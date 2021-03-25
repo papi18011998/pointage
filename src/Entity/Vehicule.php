@@ -44,6 +44,7 @@ class Vehicule
      */
     private $departs;
 
+
     public function __construct()
     {
         $this->utilisateurs = new ArrayCollection();
@@ -147,4 +148,5 @@ class Vehicule
 
         return $this;
     }
+ 
 }

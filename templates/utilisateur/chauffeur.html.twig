@@ -4,7 +4,7 @@
 <div class="userInformation">
 <span>Chauffeur : {{ app.user.prenom}} {{ app.user.nom}}</span>
 <span>Véhicule : {% for vehicule in app.user.vehicules %}
-    {{vehicule}}
+    {{vehicule.immatriculation}}
 {% endfor %}</span>
 <span>Téléphone : {{ app.user.telephone}}</span>
 <a class="btn btn-danger" href="{{path('userDisconnect')}}">Se déconnecter</a>
@@ -20,7 +20,6 @@
 <div class="contentVariable"></div>
 <div class="startMyDay">
 {{ form_start(form) }}
-<input type='submit' value='Demarrer'/>
 {{ form_end(form)}}
 </div>
 <div class="makeScore">2</div>

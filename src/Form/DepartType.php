@@ -19,15 +19,16 @@ class DepartType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('jour',DateType::class,['widget' => 'single_text','format' => 'yyyy-MM-dd'])
-            ->add('heureDepart',DateTimeType::class,['date_label' => 'Heure de départ'])
+            ->add('jour',DateType::class,['widget' => 'single_text','format' => 'yyyy-MM-dd','disabled' => true, 'data'=> new \DateTime("now")])
+            ->add('heureDepart',DateTimeType::class,['date_label' => 'Heure de départ','disabled' => true, 'data'=> new \DateTime("now")])
             ->add('utilisateur',EntityType::class,['class'=>Utilisateur::class,'disabled' => true,
             'choice_label' => function($utilisateur, $key, $index) {
                 /** @var Utilisateur $utilisateur */
                 return $utilisateur->getPrenom() . ' ' . $utilisateur->getNom();
             }])
             ->add('vehicule',EntityType::class,['class'=>Vehicule::class,'choice_label'=>'immatriculation'])
-            //->add('vehicule',EntityType::class,['class'=>Vehicule::class,'choice_label'=>'id'])
+            ->add('Démarrer',SubmitType::class,['label'=>'Démarrer la journée'])
+            ->add('Effacer',ResetType::class,['label'=>'Effacer les données'])
 
         ;
     }

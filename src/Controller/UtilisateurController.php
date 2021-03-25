@@ -42,14 +42,30 @@ class UtilisateurController extends AbstractController
      * @Route("/admin", name="admin")
      */
     public function admin(){
-        $this->denyAccessUnlessGranted('ROLE_ADMIN',null,"Vos droits ne sont pas suffisant pour acceder à cette partie");
+        $this->denyAccessUnlessGranted('ROLE_ADMIN',null,"Vos droits ne sont pas suffisants pour acceder à cette partie");
         return $this->render('utilisateur/admin.html.twig');
     }
     //----------------------------------Espace réservé au chauffeur------------------------------------//
     /**
      * @Route("/chauffeur", name="chauffeur")
      */
-    public function chauffeur(Request $request){
+    public function chauffeur(Request $request,Depart $depart = null,EntityManagerInterface $manager){
+        $this->denyAccessUnlessGranted('ROLE_CHAUFFEUR',null,"Vos droits ne sont pas suffisants pour acceder à cette partie");
+        // Démarrage de la journée du chauffeur
+        if(!$depart){
+            $depart = new Depart();
+        }
+        $form = $this->createForm(DepartType::class,$depart);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $depart->setHeureDepart(new \DateTime())
+                   ->setJour(new \DateTime());
+            $depart->setUtilisateur($this->getUser());
+            //Affectation du vehicule au chauffeur
+            $this->getUser()->addVehicule($depart->getVehicule());
+            $manager->persist($depart);
+            $manager->flush();
+        }
         return $this->render('utilisateur/chauffeur.html.twig',['form'=>$form->createView()]);
     }
     //----------------------------------Déconnexion de l'utilisateur--------------------------------//
