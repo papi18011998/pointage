@@ -42,6 +42,11 @@ class Pointage
      */
     private $utilisateur;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Livraison::class, inversedBy="pointages")
+     */
+    private $livraison;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,18 @@ class Pointage
     public function setUtilisateur(?Utilisateur $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    public function getLivraison(): ?Livraison
+    {
+        return $this->livraison;
+    }
+
+    public function setLivraison(?Livraison $livraison): self
+    {
+        $this->livraison = $livraison;
 
         return $this;
     }

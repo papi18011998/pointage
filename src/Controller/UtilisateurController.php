@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Depart;
+use App\Entity\Pointage;
 use App\Form\DepartType;
+use App\Form\PointageType;
 use App\Entity\Utilisateur;
 use App\Form\UtilisateurType;
 use App\Repository\VehiculeRepository;
@@ -49,7 +51,7 @@ class UtilisateurController extends AbstractController
     /**
      * @Route("/chauffeur", name="chauffeur")
      */
-    public function chauffeur(Request $request,Depart $depart = null,EntityManagerInterface $manager){
+    public function chauffeur(Request $request,Depart $depart = null, Pointage $pointage = null,EntityManagerInterface $manager){
         $this->denyAccessUnlessGranted('ROLE_CHAUFFEUR',null,"Vos droits ne sont pas suffisants pour acceder à cette partie");
         // Démarrage de la journée du chauffeur
         if(!$depart){
@@ -66,7 +68,16 @@ class UtilisateurController extends AbstractController
             $manager->persist($depart);
             $manager->flush();
         }
-        return $this->render('utilisateur/chauffeur.html.twig',['form'=>$form->createView()]);
+        // Faire un pointage
+        if(!$pointage){
+            $pointage = new Pointage();
+        } 
+        $formMakeScore = $this->createForm(PointageType::class,$pointage);
+        $formMakeScore->handleRequest($request);
+        if ($formMakeScore->isSubmitted() && $formMakeScore->isValid()) {
+            dump($pointage);
+        }      
+        return $this->render('utilisateur/chauffeur.html.twig',['form'=>$form->createView(),'formMakeScore'=>$formMakeScore->createView()]);
     }
     //----------------------------------Déconnexion de l'utilisateur--------------------------------//
     /**
