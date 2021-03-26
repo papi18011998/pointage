@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Role;
+use App\Entity\Vehicule;
 use App\Entity\Utilisateur;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -38,6 +39,19 @@ class AppFixtures extends Fixture{
                         ->setRole($role1);
             $manager->persist($role1);
             $manager->persist($utilisateur1);
+            // Ajout des véhicules
+            $vehicule = new Vehicule();
+            $vehicule->setMarque("Peugeot")
+                     ->setModele("Partner")
+                     ->setImmatriculation("DK-1234-AL")
+                     ->setEtat('libre');
+            $manager->persist($vehicule);
+            $vehicule1 = new Vehicule();
+            $vehicule1->setMarque("Peugeot")
+                     ->setModele("Partner")
+                     ->setImmatriculation("TH-5678-BL")
+                     ->setEtat('occupé');
+            $manager->persist($vehicule1);        
         $manager->flush();
     }
 }
