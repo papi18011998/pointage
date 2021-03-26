@@ -44,6 +44,11 @@ class Vehicule
      */
     private $departs;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $etat;
+
 
     public function __construct()
     {
@@ -145,6 +150,18 @@ class Vehicule
                 $depart->setVehicule(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEtat(): ?string
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(string $etat): self
+    {
+        $this->etat = $etat;
 
         return $this;
     }
