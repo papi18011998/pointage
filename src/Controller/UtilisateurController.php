@@ -9,6 +9,7 @@ use App\Form\PointageType;
 use App\Entity\Utilisateur;
 use App\Form\UtilisateurType;
 use App\Repository\VehiculeRepository;
+use App\Repository\LivraisonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,7 +52,7 @@ class UtilisateurController extends AbstractController
     /**
      * @Route("/chauffeur", name="chauffeur")
      */
-    public function chauffeur(Request $request,Depart $depart = null, Pointage $pointage = null,EntityManagerInterface $manager){
+    public function chauffeur(Request $request,Depart $depart = null,LivraisonRepository $livraisonRepo, Pointage $pointage = null,EntityManagerInterface $manager){
         $this->denyAccessUnlessGranted('ROLE_CHAUFFEUR',null,"Vos droits ne sont pas suffisants pour acceder à cette partie");
         // Démarrage de la journée du chauffeur
         if(!$depart){
@@ -75,7 +76,14 @@ class UtilisateurController extends AbstractController
         $formMakeScore = $this->createForm(PointageType::class,$pointage);
         $formMakeScore->handleRequest($request);
         if ($formMakeScore->isSubmitted() && $formMakeScore->isValid()) {
-            dump($pointage);
+            // reception et traitement de la requete
+            $pointage->setUtilisateur($this->getUser());
+            $livraison = $livraisonRepo->findById($pointage->getLivraison());
+            // $pointage->setPointDeLivraison($livraison->getLibelle());
+            // $pointage->setPointDeLivraison();
+            dump($livraison->getLibelle());
+            // $manager->persist($pointage);
+            // $manager->flush();
         }      
         return $this->render('utilisateur/chauffeur.html.twig',['form'=>$form->createView(),'formMakeScore'=>$formMakeScore->createView()]);
     }

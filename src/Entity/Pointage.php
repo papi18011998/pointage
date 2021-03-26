@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Entity;
-
-use App\Repository\PointageRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PointageRepository;
 
 /**
  * @ORM\Entity(repositoryClass=PointageRepository::class)
@@ -23,7 +23,7 @@ class Pointage
     private $heureArrivee;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="time") 
      */
     private $heurSortie;
 
