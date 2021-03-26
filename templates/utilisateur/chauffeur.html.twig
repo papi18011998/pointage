@@ -34,6 +34,7 @@
        $(document).ready(function(){
         // Commencer ma journée
          $('.startMyDayButton').click(function(){
+             $(this).css('display','none')
              $('.contentVariable').html("")
              console.log($('.contentVariable').html($('.startMyDay').html()));
          })
