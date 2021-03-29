@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Depart;
+use App\Entity\Incident;
 use App\Entity\Pointage;
 use App\Form\DepartType;
+use App\Form\IncidentType;
 use App\Form\PointageType;
 use App\Entity\Utilisateur;
 use App\Form\UtilisateurType;
@@ -52,7 +54,7 @@ class UtilisateurController extends AbstractController
     /**
      * @Route("/chauffeur", name="chauffeur")
      */
-    public function chauffeur(Request $request,Depart $depart = null,LivraisonRepository $livraisonRepo, Pointage $pointage = null,EntityManagerInterface $manager){
+    public function chauffeur(Request $request,Depart $depart = null,Incident $incident, Pointage $pointage = null,EntityManagerInterface $manager){
         $this->denyAccessUnlessGranted('ROLE_CHAUFFEUR',null,"Vos droits ne sont pas suffisants pour acceder à cette partie");
         // Démarrage de la journée du chauffeur
         if(!$depart){
@@ -66,6 +68,7 @@ class UtilisateurController extends AbstractController
             $depart->setUtilisateur($this->getUser());
             //Affectation du vehicule au chauffeur
             $this->getUser()->addVehicule($depart->getVehicule());
+            $depart->getVehicule()->setEtat("occupé");
             $manager->persist($depart);
             $manager->flush();
         }
@@ -78,14 +81,14 @@ class UtilisateurController extends AbstractController
         if ($formMakeScore->isSubmitted() && $formMakeScore->isValid()) {
             // reception et traitement de la requete
             $pointage->setUtilisateur($this->getUser());
-            $livraison = $livraisonRepo->findById($pointage->getLivraison());
-            // $pointage->setPointDeLivraison($livraison->getLibelle());
-            // $pointage->setPointDeLivraison();
-            dump($livraison->getLibelle());
-            // $manager->persist($pointage);
-            // $manager->flush();
-        }      
-        return $this->render('utilisateur/chauffeur.html.twig',['form'=>$form->createView(),'formMakeScore'=>$formMakeScore->createView()]);
+            $pointage->setPointDeLivraison($pointage->getLivraison()->getLibelle());
+            $pointage->getLivraison()->setStatut("fait");
+            $manager->persist($pointage);
+            $manager->flush();
+        }  
+        //Déclarer un incident
+        $formDeclareIncident = $this->createForm(IncidentType::class,$incident);    
+        return $this->render('utilisateur/chauffeur.html.twig',['form'=>$form->createView(),'formMakeScore'=>$formMakeScore->createView(),'formDeclareIncident'=>$formDeclareIncident->createView()]);
     }
     //----------------------------------Déconnexion de l'utilisateur--------------------------------//
     /**
