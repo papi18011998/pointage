@@ -54,7 +54,7 @@ class UtilisateurController extends AbstractController
     /**
      * @Route("/chauffeur", name="chauffeur")
      */
-    public function chauffeur(Request $request,Depart $depart = null,Incident $incident, Pointage $pointage = null,EntityManagerInterface $manager){
+    public function chauffeur(Request $request,Depart $depart = null,Incident $incident = null, Pointage $pointage = null,LivraisonRepository $livraisonRepository,EntityManagerInterface $manager){
         $this->denyAccessUnlessGranted('ROLE_CHAUFFEUR',null,"Vos droits ne sont pas suffisants pour acceder à cette partie");
         // Démarrage de la journée du chauffeur
         if(!$depart){
@@ -87,8 +87,31 @@ class UtilisateurController extends AbstractController
             $manager->flush();
         }  
         //Déclarer un incident
-        $formDeclareIncident = $this->createForm(IncidentType::class,$incident);    
-        return $this->render('utilisateur/chauffeur.html.twig',['form'=>$form->createView(),'formMakeScore'=>$formMakeScore->createView(),'formDeclareIncident'=>$formDeclareIncident->createView()]);
+        if(!$incident){
+            $incident = new Incident();
+        }
+        $formDeclareIncident = $this->createForm(IncidentType::class,$incident);
+        $formDeclareIncident->handleRequest($request);
+        if ($formDeclareIncident->isSubmitted() && $formDeclareIncident->isValid()) {
+            $incident->setUtilisateur($this->getUser());
+            $incident->setDateIncident(new \DateTime());
+            $manager->persist($incident);
+            $manager->flush();
+        }
+        //Liste des livraisons
+        $allDeliver = $livraisonRepository->findAll();
+        //J'ai fin ma journée
+        
+        return $this->render('utilisateur/chauffeur.html.twig',['form'=>$form->createView(),
+        'formMakeScore'=>$formMakeScore->createView(),
+        'formDeclareIncident'=>$formDeclareIncident->createView(),
+        'livraisons'=>$allDeliver]);
+    }
+    //impressions des livraisons par le chauffeur
+    /**
+     * @Route("/liste", name="imprimer")
+     */
+    public function generate_pdf(LivraisonRepository $livraisonRepo){
     }
     //----------------------------------Déconnexion de l'utilisateur--------------------------------//
     /**

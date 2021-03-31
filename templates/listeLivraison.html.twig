@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="tourList">
+<table class="table table-striped col-sm-12">
+  <thead>
+    <tr>
+      <th scope="col">Numéro de livraison</th>
+      <th scope="col">Libellé de la livraison</th>
+      <th scope="col">Statut de la Livraison</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for livraison in livraisons %}
+    <tr>
+      <th scope="row"> {{ livraison.id }} </th>
+      <td> {{livraison.libelle }} </td>
+      <td> {{ livraison.statut}} </td>
+      <td> {% for pointage in livraison.pointages %}
+          {{ pointage.utilisateur.prenom }}
+      {% endfor %} </td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}
