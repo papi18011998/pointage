@@ -75,6 +75,7 @@ class Utilisateur implements UserInterface
         $this->commentaire = new ArrayCollection();
         $this->departs = new ArrayCollection();
         $this->vehicules = new ArrayCollection();
+        $this->livraisons = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -227,6 +228,11 @@ class Utilisateur implements UserInterface
      * @ORM\ManyToMany(targetEntity=Vehicule::class, inversedBy="utilisateurs")
      */
     private $vehicules;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Livraison::class, mappedBy="utilisateur")
+     */
+    private $livraisons;
     public function getUsername()
     {
         return $this->login;
@@ -291,6 +297,36 @@ class Utilisateur implements UserInterface
     public function removeVehicule(Vehicule $vehicule): self
     {
         $this->vehicules->removeElement($vehicule);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Livraison[]
+     */
+    public function getLivraisons(): Collection
+    {
+        return $this->livraisons;
+    }
+
+    public function addLivraison(Livraison $livraison): self
+    {
+        if (!$this->livraisons->contains($livraison)) {
+            $this->livraisons[] = $livraison;
+            $livraison->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLivraison(Livraison $livraison): self
+    {
+        if ($this->livraisons->removeElement($livraison)) {
+            // set the owning side to null (unless already changed)
+            if ($livraison->getUtilisateur() === $this) {
+                $livraison->setUtilisateur(null);
+            }
+        }
 
         return $this;
     }

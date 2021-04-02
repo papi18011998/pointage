@@ -47,6 +47,16 @@ class Pointage
      */
     private $livraison;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Vehicule::class, inversedBy="pointages")
+     */
+    private $vehicule;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $jour;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +130,30 @@ class Pointage
     public function setLivraison(?Livraison $livraison): self
     {
         $this->livraison = $livraison;
+
+        return $this;
+    }
+
+    public function getVehicule(): ?Vehicule
+    {
+        return $this->vehicule;
+    }
+
+    public function setVehicule(?Vehicule $vehicule): self
+    {
+        $this->vehicule = $vehicule;
+
+        return $this;
+    }
+
+    public function getJour(): ?\DateTimeInterface
+    {
+        return $this->jour;
+    }
+
+    public function setJour(\DateTimeInterface $jour): self
+    {
+        $this->jour = $jour;
 
         return $this;
     }

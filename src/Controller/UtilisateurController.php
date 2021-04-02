@@ -7,6 +7,7 @@ use Dompdf\Options;
 use App\Entity\Depart;
 use App\Entity\Incident;
 use App\Entity\Pointage;
+use App\Entity\Vehicule;
 use App\Form\DepartType;
 use App\Form\IncidentType;
 use App\Form\PointageType;
@@ -85,6 +86,11 @@ class UtilisateurController extends AbstractController
             $pointage->setUtilisateur($this->getUser());
             $pointage->setPointDeLivraison($pointage->getLivraison()->getLibelle());
             $pointage->getLivraison()->setStatut("fait");
+            $pointage->setJour( new \DateTime());
+            $pointage->setVehicule();
+            //affectation de la livraison au chauffeur connecté
+            $livraisonDoneBy = $livraisonRepository->findOneById($pointage->getLivraison()->getId());
+            $livraisonDoneBy->setUtilisateur($this->getUser());
             $manager->persist($pointage);
             $manager->flush();
         }  
@@ -116,31 +122,33 @@ class UtilisateurController extends AbstractController
     public function imprimer(LivraisonRepository $livraisonRepo)
     {
         // Configure Dompdf according to your needs
-        $livraison = $livraisonRepo->findAll();
-        $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont', 'Roboto');
+        $livraisons = $this->getUser()->getLivraisons();
+        // dump($livraison);
+        return $this->render('listeLivraison.html.twig',['livraisons'=>$livraisons]);
+        // $pdfOptions = new Options();
+        // $pdfOptions->set('defaultFont', 'Arial');
         
-        // Instantiate Dompdf with our options
-        $dompdf = new Dompdf($pdfOptions);
+         // Instantiate Dompdf with our options
+        // $dompdf = new Dompdf($pdfOptions);
         
         // Retrieve the HTML generated in our twig file
-        $html = $this->renderView('listeLivraison.html.twig', [
-            'livraisons' => $livraison
-        ]);
+        // $html = $this->renderView('listeLivraison.html.twig', [
+        //     'livraisons' => $livraison
+        // ]);
         
-        // Load HTML to Dompdf
-        $dompdf->loadHtml($html);
+         // Load HTML to Dompdf
+        //$dompdf->loadHtml($html);
         
-        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
-        $dompdf->setPaper('A4', 'portrait');
+         // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        //$dompdf->setPaper('A4', 'portrait');
 
-        // Render the HTML as PDF
-        $dompdf->render();
+         // Render the HTML as PDF
+        //$dompdf->render();
 
-        // Output the generated PDF to Browser (force download)
-        $dompdf->stream("livraison.pdf", [
-            "Attachment" => true
-        ]);
+         // Output the generated PDF to Browser (force download)
+        // $dompdf->stream('Feuille de route '. $this->getUser()->getLogin() new \DateTime .'.pdf', [
+        //     "Attachment" => false
+        //  ]);
     }
     //----------------------------------Déconnexion de l'utilisateur--------------------------------//
     /**

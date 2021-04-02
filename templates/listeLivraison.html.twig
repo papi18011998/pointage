@@ -1,12 +1,40 @@
 {% extends "base.html.twig" %}
 {% block body %}
-<div class="tourList">
+<div>
+  <img src="{{asset('logo.png')}}"/>
+</div>
+<div class="infoChauffeur">
+    <div class='treeContent'>
+      <div class='infoChauffeur'>Prénom(s) Nom:</div>
+      <div class='infoChauffeur'><strong>{{ app.user.prenom}} {{app.user.nom}}</strong></div>
+    </div>
+    <div class='treeContent'>
+      <div class='infoChauffeur'>Téléphone</div>
+      <div class='infoChauffeur'><strong>{{app.user.telephone}}</strong></div>
+    </div>
+    <div class='treeContent'>
+      <div class='infoChauffeur'>Jour de la tournée</div>
+      <div class='infoChauffeur'>
+        {% for livraison in livraisons %}
+          {% for pointage in livraison.pointages %}
+            {{ pointage.jour | date("d-m-Y")}}
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div> 
+</div>
+
+<div>
 <table class="table table-striped col-sm-12">
-  <thead>
+  <thead class="thead-dark">
     <tr>
       <th scope="col">Numéro de livraison</th>
       <th scope="col">Libellé de la livraison</th>
       <th scope="col">Statut de la Livraison</th>
+      <th scope="col">Véhicule utilisé</th>
+      <th scope="col">Heure Arrivée</th>
+      <th scope="col">Heure Sortie</th>
+      <th scope="col">Commentaires</th>
     </tr>
   </thead>
   <tbody>
@@ -15,9 +43,26 @@
       <th scope="row"> {{ livraison.id }} </th>
       <td> {{livraison.libelle }} </td>
       <td> {{ livraison.statut}} </td>
-      <td> {% for pointage in livraison.pointages %}
-          {{ pointage.utilisateur.prenom }}
-      {% endfor %} </td>
+      <td>
+        {% for pointage in livraison.pointages %}
+           {{ pointage.vehicule.immatriculation }}
+         {% endfor %}
+      </td>
+      <td>
+        {% for pointage in livraison.pointages %}
+           {{ pointage.heureArrivee | date("H:i")}}
+         {% endfor %}
+      </td>
+      <td>
+        {% for pointage in livraison.pointages %}
+           {{ pointage.heurSortie | date("H:i")}}
+         {% endfor %}
+      </td>
+      <td>
+        {% for pointage in livraison.pointages %}
+           {{ pointage.commentaire}}
+         {% endfor %}
+      </td>
     </tr>
 {% endfor %}
 </tbody>

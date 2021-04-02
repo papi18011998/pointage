@@ -49,11 +49,17 @@ class Vehicule
      */
     private $etat;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Pointage::class, mappedBy="vehicule")
+     */
+    private $pointages;
+
 
     public function __construct()
     {
         $this->utilisateurs = new ArrayCollection();
         $this->departs = new ArrayCollection();
+        $this->pointages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -162,6 +168,36 @@ class Vehicule
     public function setEtat(string $etat): self
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Pointage[]
+     */
+    public function getPointages(): Collection
+    {
+        return $this->pointages;
+    }
+
+    public function addPointage(Pointage $pointage): self
+    {
+        if (!$this->pointages->contains($pointage)) {
+            $this->pointages[] = $pointage;
+            $pointage->setVehicule($this);
+        }
+
+        return $this;
+    }
+
+    public function removePointage(Pointage $pointage): self
+    {
+        if ($this->pointages->removeElement($pointage)) {
+            // set the owning side to null (unless already changed)
+            if ($pointage->getVehicule() === $this) {
+                $pointage->setVehicule(null);
+            }
+        }
 
         return $this;
     }

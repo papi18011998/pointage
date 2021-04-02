@@ -36,6 +36,15 @@ body{
 .startMyDay,.makeScore,.reportIncident,.changeVehicle,.tourList,.finishDay{
     display: none;
 }
+.infoChauffeurIn,.infoChauffeur{
+    width:100%;
+    height: auto;
+}
+.treeContent{
+    width:33%;
+    height: auto;
+    display: inline-block;  
+}
 /*----------------------------------------Gestion de la responsivité de l'appli-------------------------------*/
 @media screen and (max-width: 480px) {
     .top{

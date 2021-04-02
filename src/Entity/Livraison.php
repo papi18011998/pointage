@@ -34,6 +34,11 @@ class Livraison
      */
     private $statut;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="livraisons")
+     */
+    private $utilisateur;
+
     public function __construct()
     {
         $this->pointages = new ArrayCollection();
@@ -94,6 +99,18 @@ class Livraison
     public function setStatut(string $statut): self
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?Utilisateur $utilisateur): self
+    {
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }
