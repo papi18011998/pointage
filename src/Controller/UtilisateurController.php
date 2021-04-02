@@ -87,7 +87,7 @@ class UtilisateurController extends AbstractController
             $pointage->setPointDeLivraison($pointage->getLivraison()->getLibelle());
             $pointage->getLivraison()->setStatut("fait");
             $pointage->setJour( new \DateTime());
-            $pointage->setVehicule();
+            $pointage->setVehicule($this->getUser()->getVehicules()[0]);
             //affectation de la livraison au chauffeur connecté
             $livraisonDoneBy = $livraisonRepository->findOneById($pointage->getLivraison()->getId());
             $livraisonDoneBy->setUtilisateur($this->getUser());
@@ -124,31 +124,31 @@ class UtilisateurController extends AbstractController
         // Configure Dompdf according to your needs
         $livraisons = $this->getUser()->getLivraisons();
         // dump($livraison);
-        return $this->render('listeLivraison.html.twig',['livraisons'=>$livraisons]);
-        // $pdfOptions = new Options();
-        // $pdfOptions->set('defaultFont', 'Arial');
+        // return $this->render('listeLivraison.html.twig',['livraisons'=>$livraisons]);
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
         
          // Instantiate Dompdf with our options
-        // $dompdf = new Dompdf($pdfOptions);
+        $dompdf = new Dompdf($pdfOptions);
         
         // Retrieve the HTML generated in our twig file
-        // $html = $this->renderView('listeLivraison.html.twig', [
-        //     'livraisons' => $livraison
-        // ]);
+        $html = $this->renderView('listeLivraison.html.twig', [
+            'livraisons' => $livraisons
+        ]);
         
          // Load HTML to Dompdf
-        //$dompdf->loadHtml($html);
+        $dompdf->loadHtml($html);
         
          // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
-        //$dompdf->setPaper('A4', 'portrait');
+        $dompdf->setPaper('A4', 'portrait');
 
          // Render the HTML as PDF
-        //$dompdf->render();
+        $dompdf->render();
 
          // Output the generated PDF to Browser (force download)
-        // $dompdf->stream('Feuille de route '. $this->getUser()->getLogin() new \DateTime .'.pdf', [
-        //     "Attachment" => false
-        //  ]);
+         $dompdf->stream('Livraison'.$this->getUser()->getLogin().'.pdf', [
+             "Attachment" => false
+          ]);
     }
     //----------------------------------Déconnexion de l'utilisateur--------------------------------//
     /**
