@@ -36,14 +36,24 @@ body{
 .startMyDay,.makeScore,.reportIncident,.changeVehicle,.tourList,.finishDay{
     display: none;
 }
-.infoChauffeurIn,.infoChauffeur{
+.infoChauffeur{
     width:100%;
     height: auto;
+    float: left;
 }
 .treeContent{
-    width:33%;
+    width:50%;
     height: auto;
-    display: inline-block;  
+    float: left; 
+    background-color: red;
+}
+.divOption{
+    background-color: rgba(223, 223, 209, 0.781);
+    border:1px solid rgb(68, 65, 65);
+    color: black;
+}
+.divOption:hover{
+ cursor:pointer;
 }
 /*----------------------------------------Gestion de la responsivité de l'appli-------------------------------*/
 @media screen and (max-width: 480px) {

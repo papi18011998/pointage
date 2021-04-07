@@ -13,6 +13,7 @@ use App\Form\IncidentType;
 use App\Form\PointageType;
 use App\Entity\Utilisateur;
 use App\Form\UtilisateurType;
+use App\Repository\PointageRepository;
 use App\Repository\VehiculeRepository;
 use App\Repository\LivraisonRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -119,21 +120,21 @@ class UtilisateurController extends AbstractController
     /**
      * @Route("/liste", name="imprimer")
      */
-    public function imprimer(LivraisonRepository $livraisonRepo)
+    public function imprimer(LivraisonRepository $livraisonRepo,PointageRepository $pointageRepo)
     {
         // Configure Dompdf according to your needs
-        $livraisons = $this->getUser()->getLivraisons();
-        // dump($livraison);
-        // return $this->render('listeLivraison.html.twig',['livraisons'=>$livraisons]);
+        //$livraisons = $this->getUser()->getLivraisons();
+        $pointage = $pointageRepo->findByJour(new \DateTime());
+        //  return $this->render('listeLivraison.html.twig',['pointages'=>$pointage]);
         $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont', 'Arial');
+        $pdfOptions->set(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]);
         
          // Instantiate Dompdf with our options
         $dompdf = new Dompdf($pdfOptions);
         
         // Retrieve the HTML generated in our twig file
         $html = $this->renderView('listeLivraison.html.twig', [
-            'livraisons' => $livraisons
+            'pointages' => $pointage
         ]);
         
          // Load HTML to Dompdf
@@ -146,7 +147,7 @@ class UtilisateurController extends AbstractController
         $dompdf->render();
 
          // Output the generated PDF to Browser (force download)
-         $dompdf->stream('Livraison'.$this->getUser()->getLogin().'.pdf', [
+         $dompdf->stream('Livraison de '.$this->getUser()->getLogin().'.pdf', [
              "Attachment" => false
           ]);
     }

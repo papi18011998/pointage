@@ -1,31 +1,33 @@
 {% extends "base.html.twig" %}
 {% block body %}
-<div>
-  <img src="../public/logo.png"/>
-</div>
+<center><h1 style='text-decoration:underline;'><strong>Feuille de route Chauffeur</strong></h1></center>
+<!-- Infos chauffeur responsable de la tournée -->
+&nbsp;&nbsp;&nbsp;------------------------------------------------------------------------------------------------------------------------------
 <div class="infoChauffeur">
     <div class='treeContent'>
-      <div class='infoChauffeur'>Prénom(s) Nom:</div>
-      <div class='infoChauffeur'><strong>{{ app.user.prenom}} {{app.user.nom}}</strong></div>
-    </div>
-    <div class='treeContent'>
-      <div class='infoChauffeur'>Téléphone</div>
-      <div class='infoChauffeur'><strong>{{app.user.telephone}}</strong></div>
-    </div>
-    <div class='treeContent'>
-      <div class='infoChauffeur'>Jour de la tournée</div>
-      <div class='infoChauffeur'>
-        {% for livraison in livraisons %}
-          {% for pointage in livraison.pointages %}
-            {{ pointage.jour | date("d-m-Y")}}
-          {% endfor %}
-        {% endfor %}
-      </div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;Prénom(s) Nom:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Téléphone</div>
+    <div>
+     &nbsp;&nbsp;&nbsp;&nbsp; <strong>{{ app.user.prenom}} {{app.user.nom}}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <strong>{{app.user.telephone}}</strong>
     </div> 
+&nbsp;&nbsp;&nbsp;------------------------------------------------------------------------------------------------------------------------------
+    <!-- Infos sur les tournées faites pas faites -->
+    <div>
+     &nbsp;&nbsp;&nbsp;&nbsp;Date de la tournée: {{ "now"|date("m/d/Y") }} &nbsp;&nbsp;&nbsp;&nbsp;Nombre de points à Livrer: 12  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Points Livrés:12
+    </div>
+    &nbsp;&nbsp;&nbsp;------------------------------------------------------------------------------------------------------------------------------
+    <!-- infos sue le départ et l'arrivée du chauffeur --> 
+    <div>
+     &nbsp;&nbsp;&nbsp;&nbsp;Heure de départ de l'usine: 10:17 &nbsp;&nbsp;Heure de retour / arrivée à l'usine: 12:12
+    </div>
+    <br/>
 </div>
 
 <div>
-<table class="table table-striped col-sm-12">
+<table class="table table-bordered col-sm-12" border="1">
   <thead class="thead-dark">
     <tr>
       <th scope="col">Numéro de livraison</th>
@@ -34,36 +36,20 @@
       <th scope="col">Véhicule utilisé</th>
       <th scope="col">Heure Arrivée</th>
       <th scope="col">Heure Sortie</th>
-      <th scope="col">Commentaires</th>
     </tr>
   </thead>
   <tbody>
-{% for livraison in livraisons %}
+{% for pointage in pointages %}
+   {% if pointage.utilisateur == app.user %}
     <tr>
-      <th scope="row"> {{ livraison.id }} </th>
-      <td> {{livraison.libelle }} </td>
-      <td> {{ livraison.statut}} </td>
-      <td>
-        {% for pointage in livraison.pointages %}
-           {{ pointage.vehicule.immatriculation }}
-         {% endfor %}
-      </td>
-      <td>
-        {% for pointage in livraison.pointages %}
-           {{ pointage.heureArrivee | date("H:i")}}
-         {% endfor %}
-      </td>
-      <td>
-        {% for pointage in livraison.pointages %}
-           {{ pointage.heurSortie | date("H:i")}}
-         {% endfor %}
-      </td>
-      <td>
-        {% for pointage in livraison.pointages %}
-           {{ pointage.commentaire}}
-         {% endfor %}
-      </td>
+      <th scope="row"> {{ pointage.id }} </th>
+      <td> {{pointage.PointDeLivraison }} </td>
+      <td> {{ pointage.livraison.statut}} </td>
+      <td> {{ pointage.vehicule.immatriculation}} </td>
+      <td> {{ pointage.heureArrivee | date("H:i")}} </td>
+      <td> {{ pointage.heurSortie | date("H:i")}}</td>
     </tr>
+   {% endif %}
 {% endfor %}
 </tbody>
 </table>
