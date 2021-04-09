@@ -36,15 +36,16 @@ class DepartRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Depart
+    
+    public function findOneByUtilisateurByJour($utilisateur,$jour)
     {
         return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
+            ->where('d.utilisateur = :utilisateur')
+            ->andWhere('d.jour = :jour')
+            ->setParameter('utilisateur', $utilisateur)
+            ->setParameter('jour', $jour)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
+
 }

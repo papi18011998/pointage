@@ -15,20 +15,45 @@
 &nbsp;&nbsp;&nbsp;------------------------------------------------------------------------------------------------------------------------------
     <!-- Infos sur les tournées faites pas faites -->
     <div>
-     &nbsp;&nbsp;&nbsp;&nbsp;Date de la tournée: {{ "now"|date("m/d/Y") }} &nbsp;&nbsp;&nbsp;&nbsp;Nombre de points à Livrer: 12  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      Points Livrés:12
+     &nbsp;&nbsp;&nbsp;&nbsp;Date de la tournée: {{ "now"|date("m/d/Y") }} &nbsp;&nbsp;&nbsp;&nbsp;
+     Nombre de points à Livrer: 
+      {% for dailyShip in aLivre %}
+        {% if app.user == dailyShip.utilisateur %}
+            {% set livraisonToDo = livraisonToDo + 1 %}
+        {% endif %}
+      {% endfor %}
+      {{ livraisonToDo}}
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Points Livrés:
+      {% for pointage in pointages %}
+          {% if pointage.utilisateur == app.user %}
+            {% set livre = livre + 1 %}
+          {% endif %}
+      {% endfor %}
+      {{ livre }}
     </div>
     &nbsp;&nbsp;&nbsp;------------------------------------------------------------------------------------------------------------------------------
     <!-- infos sue le départ et l'arrivée du chauffeur --> 
     <div>
-     &nbsp;&nbsp;&nbsp;&nbsp;Heure de départ de l'usine: 10:17 &nbsp;&nbsp;Heure de retour / arrivée à l'usine: 12:12
+     &nbsp;&nbsp;&nbsp;&nbsp;Heure de départ de l'usine:
+     {% for depart in departs %}
+       {% if app.user == depart.utilisateur %}
+        {{ depart.heureDepart|date("H:i:s") }}
+       {% endif %}
+     {% endfor %}
+      &nbsp;&nbsp;Heure de retour / arrivée à l'usine:
+           {% for depart in departs %}
+       {% if app.user == depart.utilisateur %}
+        {{ depart.heureRetour|date("H:i:s") }}
+       {% endif %}
+     {% endfor %}
     </div>
     <br/>
 </div>
 
 <div>
-<table class="table table-bordered col-sm-12" border="1">
-  <thead class="thead-dark">
+<table class="table table-striped col-md-12 col-sm-12" border="2">
+  <thead>
     <tr>
       <th scope="col">Numéro de livraison</th>
       <th scope="col">Libellé de la livraison</th>

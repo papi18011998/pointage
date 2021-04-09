@@ -13,6 +13,7 @@ use App\Form\IncidentType;
 use App\Form\PointageType;
 use App\Entity\Utilisateur;
 use App\Form\UtilisateurType;
+use App\Repository\DepartRepository;
 use App\Repository\PointageRepository;
 use App\Repository\VehiculeRepository;
 use App\Repository\LivraisonRepository;
@@ -108,9 +109,9 @@ class UtilisateurController extends AbstractController
             $manager->flush();
         }
         //Liste des livraisons
-        $allDeliver = $livraisonRepository->findAll();
+        $allDeliver = $livraisonRepository->findByJour(new \DateTime());
         //J'ai fin ma journée
-        
+    
         return $this->render('utilisateur/chauffeur.html.twig',['form'=>$form->createView(),
         'formMakeScore'=>$formMakeScore->createView(),
         'formDeclareIncident'=>$formDeclareIncident->createView(),
@@ -120,12 +121,15 @@ class UtilisateurController extends AbstractController
     /**
      * @Route("/liste", name="imprimer")
      */
-    public function imprimer(LivraisonRepository $livraisonRepo,PointageRepository $pointageRepo)
+    public function imprimer(DepartRepository $departRepo,PointageRepository $pointageRepo,LivraisonRepository $livraisonRepo)
     {
         // Configure Dompdf according to your needs
-        //$livraisons = $this->getUser()->getLivraisons();
+        $livre = 0;
+        $livraisonToDo = 0;
+        $aLivre = $livraisonRepo->findByJour(new \DateTime());
+        //$livraisonToDo = count($aLivre);
+        $departDuJour = $departRepo->findByJour(new \DateTime());
         $pointage = $pointageRepo->findByJour(new \DateTime());
-        //  return $this->render('listeLivraison.html.twig',['pointages'=>$pointage]);
         $pdfOptions = new Options();
         $pdfOptions->set(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]);
         
@@ -134,7 +138,7 @@ class UtilisateurController extends AbstractController
         
         // Retrieve the HTML generated in our twig file
         $html = $this->renderView('listeLivraison.html.twig', [
-            'pointages' => $pointage
+            'pointages' => $pointage,'livre'=>$livre, 'aLivre'=>$aLivre,'departs'=>$departDuJour,'livraisonToDo'=> $livraisonToDo
         ]);
         
          // Load HTML to Dompdf
@@ -150,6 +154,21 @@ class UtilisateurController extends AbstractController
          $dompdf->stream('Livraison de '.$this->getUser()->getLogin().'.pdf', [
              "Attachment" => false
           ]);
+    }
+    /**
+     * @Route("/finish",name="finish")
+     */
+    public function finish(DepartRepository $departRepo, EntityManagerInterface $manager){
+        $livreurDepart = $departRepo->findOneByUtilisateurByJour($this->getUser(),date("Y-m-d"));
+        // renseignement de l'heure de retour de l'usine
+        $livreurDepart[0]->setHeureRetour(new \DateTime());
+        // modification du statut du véhicule
+        $vehicule = $livreurDepart[0]->getVehicule();
+        dump($vehicule->getImmatriculation());
+        // $vehicule->setEtat("libre");
+        // $manager->persist($livreur);
+        // $manager->flush();
+        // return $this->redirectToRoute("imprimer");
     }
     //----------------------------------Déconnexion de l'utilisateur--------------------------------//
     /**

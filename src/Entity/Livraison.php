@@ -39,6 +39,11 @@ class Livraison
      */
     private $utilisateur;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $jour;
+
     public function __construct()
     {
         $this->pointages = new ArrayCollection();
@@ -111,6 +116,18 @@ class Livraison
     public function setUtilisateur(?Utilisateur $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    public function getJour(): ?\DateTimeInterface
+    {
+        return $this->jour;
+    }
+
+    public function setJour(\DateTimeInterface $jour): self
+    {
+        $this->jour = $jour;
 
         return $this;
     }

@@ -15,7 +15,7 @@
     <div class="divOption col-md-12 boutton reportIncidentButton">Déclarer un incident</div>
     <div class="divOption col-md-12 boutton changeVehicleButton">Changer de véhicule</div>
     <div class="divOption col-md-12 boutton tourListButton">Liste de mes tournées du jour</div>
-    <div class="divOption col-md-12 boutton finishDayButton">J'ai fini ma journée</div>
+    <a class="divOption col-md-12 boutton finishDayButton" href="{{path('finish')}}">J'ai fini ma journée</a>
 </div>
 <div class="contentVariable"></div>
 <div class="startMyDay">
@@ -42,14 +42,13 @@
   </thead>
   <tbody>
 {% for livraison in livraisons %}
-    <tr>
+    {% if app.user == livraison.utilisateur %}
+      <tr>
       <th scope="row"> {{ livraison.id }} </th>
       <td> {{livraison.libelle }} </td>
       <td> {{ livraison.statut}} </td>
-      <td> {% for pointage in livraison.pointages %}
-          {{ pointage.utilisateur.prenom }}
-      {% endfor %} </td>
     </tr>
+    {% endif %}
 {% endfor %}
 </tbody>
 </table>
@@ -82,11 +81,6 @@
              $('.contentVariable').html("")
              console.log($('.contentVariable').html($('.tourList').html()));
          })
-        // // J'ai fini ma tournée
-        //  $('.finishDayButton').click(function(){
-        //      $('.contentVariable').html("")
-        //      console.log($('.contentVariable').html($('.finishDay').html()));
-        //  })
        })
    </script>
 {% endblock %}
