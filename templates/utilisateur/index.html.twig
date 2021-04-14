@@ -4,6 +4,9 @@
  <h4 class="col-md-12 col-sm-12 col-lg-12"><center>BIENVENUE DANS L'APPLICATION DE GESTION DE TOURNÉES DES CHAUFFEURS LIVREURS DE LYSA & CO</center></h4>
 </div>
 <div class="bottom">
+{% if error %}
+    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
 <center>
  <form  method="post" class="col-md-6 col-sm-12 col-lg-6" action="{{path('userLogin')}}">
    <div class="container col-md-12">

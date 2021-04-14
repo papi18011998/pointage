@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class UtilisateurController extends AbstractController
 {
@@ -31,8 +32,16 @@ class UtilisateurController extends AbstractController
     /**
      * @Route("/", name="userLogin")
      */
-    public function index() {
-       return $this->render('utilisateur/index.html.twig');
+    public function index(AuthenticationUtils $authenticationUtils) {
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+        dump($error);
+        return $this->render('utilisateur/index.html.twig', [
+            'last_username' => $lastUsername,
+            'error'=> $error,
+        ]);
     }
     /**
      * @Route("/roles", name="roles")
@@ -164,11 +173,13 @@ class UtilisateurController extends AbstractController
         $livreurDepart[0]->setHeureRetour(new \DateTime());
         // modification du statut du véhicule
         $vehicule = $livreurDepart[0]->getVehicule();
-        dump($vehicule->getImmatriculation());
-        // $vehicule->setEtat("libre");
-        // $manager->persist($livreur);
-        // $manager->flush();
-        // return $this->redirectToRoute("imprimer");
+        $vehicule->setEtat("libre");
+        // passage à null du véhicule de l'utilisateur connecté
+        $this->getUser()->setVehicule(null);
+        $manager->persist($this->getUser());
+        $manager->persist($vehicule);
+        $manager->flush();
+        return $this->redirectToRoute("imprimer");
     }
     //----------------------------------Déconnexion de l'utilisateur--------------------------------//
     /**
