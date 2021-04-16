@@ -1,8 +1,5 @@
 {% extends "base.html.twig" %}
 {% block body %}
-<div class="top">
- <h4 class="col-md-12 col-sm-12 col-lg-12"><center>BIENVENUE DANS L'APPLICATION DE GESTION DE TOURNÉES DES CHAUFFEURS LIVREURS DE LYSA & CO</center></h4>
-</div>
 <div class="bottom">
 {% if error %}
     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -18,7 +15,7 @@
             <label for="_password"><b>Mot de passe</b></label>
             <input type="password" placeholder="Mettez votre mot de passe" name="_password" class="form-control" required>
         </div>
-        <input type="submit" value="Se connecter" name="connecter" class="btn btn-success col-md-3 col-sm-6" style="margin-bottom:5px;">
+        <input type="submit" value="Se connecter" name="connecter" class="btn btn-success col-md-3 col-sm-6">
         <input type="reset" value="Effacer" name="effacer" class="btn btn-danger col-md-3 col-sm-6">
    </div>
 </center>

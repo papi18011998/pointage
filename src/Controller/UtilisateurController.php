@@ -37,7 +37,6 @@ class UtilisateurController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        dump($error);
         return $this->render('utilisateur/index.html.twig', [
             'last_username' => $lastUsername,
             'error'=> $error,
@@ -68,7 +67,7 @@ class UtilisateurController extends AbstractController
     /**
      * @Route("/chauffeur", name="chauffeur")
      */
-    public function chauffeur(Request $request,Depart $depart = null,Incident $incident = null, Pointage $pointage = null,LivraisonRepository $livraisonRepository,EntityManagerInterface $manager){
+    public function chauffeur(Request $request,Depart $depart = null,Incident $incident = null, Pointage $pointage = null,LivraisonRepository $livraisonRepository,EntityManagerInterface $manager, DepartRepository $departRepo){
         $this->denyAccessUnlessGranted('ROLE_CHAUFFEUR',null,"Vos droits ne sont pas suffisants pour acceder à cette partie");
         // Démarrage de la journée du chauffeur
         if(!$depart){
@@ -77,6 +76,11 @@ class UtilisateurController extends AbstractController
         $form = $this->createForm(DepartType::class,$depart);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+            $dep = $departRepo->findOneByUtilisateurByJour($this->getUser(),date("Y-m-d"));
+            if ($dep[0]!= null) {
+                $manager->persist($dep[0]);
+                $manager->flush();  
+            }else{
             $depart->setHeureDepart(new \DateTime())
                    ->setJour(new \DateTime());
             $depart->setUtilisateur($this->getUser());
@@ -85,6 +89,7 @@ class UtilisateurController extends AbstractController
             $depart->getVehicule()->setEtat("occupé");
             $manager->persist($depart);
             $manager->flush();
+        }
         }
         // Faire un pointage
         if(!$pointage){
@@ -169,15 +174,20 @@ class UtilisateurController extends AbstractController
      */
     public function finish(DepartRepository $departRepo, EntityManagerInterface $manager){
         $livreurDepart = $departRepo->findOneByUtilisateurByJour($this->getUser(),date("Y-m-d"));
-        // renseignement de l'heure de retour de l'usine
-        $livreurDepart[0]->setHeureRetour(new \DateTime());
-        // modification du statut du véhicule
         $vehicule = $livreurDepart[0]->getVehicule();
-        $vehicule->setEtat("libre");
-        // passage à null du véhicule de l'utilisateur connecté
-        $this->getUser()->setVehicule(null);
-        $manager->persist($this->getUser());
-        $manager->persist($vehicule);
+        // renseignement de l'heure de retour de l'usine
+        if ($livreurDepart[0]->getHeureRetour() == null) {
+            $livreurDepart[0]->setHeureRetour(new \DateTime());
+            // modification du statut du véhicule
+            $vehicule = $livreurDepart[0]->getVehicule();
+            $vehicule->setEtat("libre");
+            $manager->persist($this->getUser());
+            $manager->persist($vehicule);
+        }else{
+            $manager->persist($this->getUser());
+            $manager->persist($vehicule);
+        }
+        
         $manager->flush();
         return $this->redirectToRoute("imprimer");
     }

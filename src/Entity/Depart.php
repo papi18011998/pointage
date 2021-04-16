@@ -28,7 +28,7 @@ class Depart
     private $heureDepart;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="time", nullable=true)
      */
     private $heureRetour;
 

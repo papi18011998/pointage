@@ -9,6 +9,7 @@ body{
     font-family: 'Lucida Calligraphy', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .bottom{
+    margin-top: 100px;
     font-family: 'Lucida Calligraphy', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;  
 }
 .slogan{
@@ -62,6 +63,7 @@ body{
     }
     .bottom{
         margin-top: 90px;
+        background-color: #e37222;
     }
     .effacer{
         margin-top: 10px;
