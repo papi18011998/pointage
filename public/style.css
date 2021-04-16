@@ -17,22 +17,25 @@ body{
     text-align: center;
     margin-left: 37%;
 }
+.active{
+    color: black;
+    background-color: red;
+}
 .userInformation{
     width: 100%;
     height: 100px;
     background-color: red;
 }
 .sideBar{
-    width: 20%;
     float: left;
+    width: 100%;
 }
 .contentVariable{
-    width: 80%;
-    float: left;
+    display:block;
 }
 .boutton{
-    display:block;
-    margin-bottom: 12%;
+    float: left;
+    width: 20%;
 }
 .startMyDay,.makeScore,.reportIncident,.changeVehicle,.tourList,.finishDay{
     display: none;

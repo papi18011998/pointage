@@ -13,7 +13,6 @@
     <div class="divOption col-md-12 boutton startMyDayButton">Je commence ma journée</div>
     <div class="divOption col-md-12 boutton makeScoreButton">Faire un pointage</div>
     <div class="divOption col-md-12 boutton reportIncidentButton">Déclarer un incident</div>
-    <div class="divOption col-md-12 boutton changeVehicleButton">Changer de véhicule</div>
     <div class="divOption col-md-12 boutton tourListButton">Liste de mes tournées du jour</div>
     <a class="divOption col-md-12 boutton finishDayButton" href="{{path('finish')}}">J'ai fini ma journée</a>
 </div>
@@ -70,11 +69,6 @@
          $('.reportIncidentButton').click(function(){
              $('.contentVariable').html("")
              console.log($('.contentVariable').html($('.reportIncident').html()));
-         })
-        // Changer un véhicule
-         $('.changeVehicleButton').click(function(){
-             $('.contentVariable').html("")
-             console.log($('.contentVariable').html($('.changeVehicle').html()));
          })
         // Liste de mes tournées
          $('.tourListButton').click(function(){
