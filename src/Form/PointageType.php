@@ -22,15 +22,15 @@ class PointageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {  
         $builder
-            ->add('heureArrivee',TimeType::class,['label'=>"Heure d'arrivée"])
-            ->add('heurSortie',TimeType::class,['label'=>"Heure de sortie"])
             ->add('livraison',EntityType::class,['class'=>Livraison::class,'choice_label'=>'libelle','label'=>'Point de Livraison',
             'query_builder' => function (LivraisonRepository $livraison) {
                 return $livraison->createQueryBuilder('u')
                 ->where('u.statut = :livraison')
                 ->setParameter('livraison','attente');
-            }])
-            ->add('commentaire',TextareaType::class)
+            },'attr'=>['class'=>"col-md-6"]])
+            ->add('heureArrivee',TimeType::class,['label'=>"Heure d'arrivée"])
+            ->add('heurSortie',TimeType::class,['label'=>"Heure de sortie"])
+            ->add('commentaire',TextareaType::class,['attr'=>['class'=>"col-md-6"]])
             ->add('Démarrer',SubmitType::class,['label'=>'Valider la tournée'])
             ->add('Effacer',ResetType::class,['label'=>'Effacer les données'])
         ;

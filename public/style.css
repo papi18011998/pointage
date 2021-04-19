@@ -23,8 +23,6 @@ body{
 }
 .userInformation{
     width: 100%;
-    height: 100px;
-    background-color: red;
 }
 .sideBar{
     float: left;
