@@ -2,12 +2,12 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block body %}
 <div class="userInformation">
-<span>Chauffeur : {{ app.user.prenom}} {{ app.user.nom}}</span>
-<span>Véhicule : {% for vehicule in app.user.vehicules %}
+<span class="userInfos">Chauffeur : {{ app.user.prenom}} {{ app.user.nom}}</span>
+<span class="userInfos">Véhicule : {% for vehicule in app.user.vehicules %}
     {{vehicule.immatriculation}}
 {% endfor %}</span>
-<span>Téléphone : {{ app.user.telephone}}</span>
-<a class="btn btn-danger" href="{{path('userDisconnect')}}">Se déconnecter</a>
+<span class="userInfos" >Téléphone : {{ app.user.telephone}}</span>
+<a class="btn btn-danger" href="{{path('userDisconnect')}}" class="userInfos" >Se déconnecter</a>
 </div>
 <center>
   <div class="sideBar">

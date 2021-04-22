@@ -77,7 +77,8 @@ class UtilisateurController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $dep = $departRepo->findOneByUtilisateurByJour($this->getUser(),date("Y-m-d"));
-            if ($dep[0]!= null) {
+            dump($dep);
+            if ($dep!= []) {
                 $manager->persist($dep[0]);
                 $manager->flush();  
             }else{

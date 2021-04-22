@@ -57,6 +57,9 @@ body{
 .divOption:hover{
  cursor:pointer;
 }
+.userInfos{
+    width: 25%;
+}
 /*----------------------------------------Gestion de la responsivité de l'appli-------------------------------*/
 @media screen and (max-width: 480px) {
     .top{
