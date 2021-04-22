@@ -20,6 +20,8 @@
     <div class="divOption col-md-12 boutton ListUser">Liste des utilisateurs</div>
 </div>
 <div id="userManagementContentVariable"></div>
+<div id="formAddUser">1</div>
+<div id="tableListUser">2</div>
 </div>
 {# Menu de gestion des incidents #}
 <div class="incidentManagement">
@@ -51,6 +53,13 @@
          $('.userManagementButton').click(function(){
              $('.contentVariable').html("")
              console.log($('.contentVariable').html($('.userManagement').html()));
+         //Menu gestion utlisateur
+         $('.addUser').click(function(){
+             alert("Test")
+         })
+         $('.ListUser').click(function(){
+             alert("Test")
+         })
          })
         // Gestion des livraisons
          $('.deliverManagementButton').click(function(){
