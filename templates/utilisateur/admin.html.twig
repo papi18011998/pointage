@@ -1,1 +1,72 @@
-pfpfkor
+{% extends "base.html.twig" %}
+{# {% form_theme form 'bootstrap_4_layout.html.twig' %} #}
+{% block body %}
+<div class="userInformation">
+<span class="userInfos">Administrateur : {{ app.user.prenom}} {{ app.user.nom}}</span>
+<span class="userInfos" >Téléphone : {{ app.user.telephone}}</span>
+<a class="btn btn-danger" href="{{path('userDisconnect')}}" class="userInfos" >Se déconnecter</a>
+</div>
+  <div class="sideBarAdmin">
+    <div class="divOption col-md-12 boutton userManagementButton">Gestions des utilisateurs</div>
+    <div class="divOption col-md-12 boutton deliverManagementButton">Gestion des livraisons</div>
+    <div class="divOption col-md-12 boutton incidentManagementButton">Gestion des incidents</div>
+    <div class="divOption col-md-12 boutton vehicleManagementButton">Gestion des véhicules</div>
+  </div>
+<div class="contentVariable"></div>
+{# Menu de gestion des utilisateurs #}
+<div class="userManagement">
+<div id="userManagementMenu">
+    <div class="divOption col-md-12 boutton addUser">Ajouter un utilisateur</div>
+    <div class="divOption col-md-12 boutton ListUser">Liste des utilisateurs</div>
+</div>
+<div id="userManagementContentVariable"></div>
+</div>
+{# Menu de gestion des incidents #}
+<div class="incidentManagement">
+<div id="incidentManagementMenu">
+    <div class="divOption col-md-12 boutton addIncident">Déclarer un incident</div>
+    <div class="divOption col-md-12 boutton ListIncident">Liste des incidents</div>
+</div>
+<div id="IncidentManagementContentVariable"></div>
+</div>
+{# Menu de gestion des livraisons #}
+<div class="deliverManagement">
+<div id="deliverManagementMenu">
+    <div class="divOption col-md-12 boutton addDeliver">Ajouter une livraison</div>
+    <div class="divOption col-md-12 boutton ListDeliver">Liste des livraisons</div>
+</div>
+<div id="DeliverManagementContentVariable"></div>
+</div>
+{# Menu de gestion des vehicules #}
+<div class="vehicleManagement">
+<div id="vehicleManagementMenu">
+    <div class="divOption col-md-12 boutton addVehicle">Ajouter un véhicule</div>
+    <div class="divOption col-md-12 boutton ListVehicle">Liste des véhicules</div>
+</div>
+<div id="VehicleManagementContentVariable"></div>
+</div>
+   <script>
+       $(document).ready(function(){
+        // Gestion des utilisateurs
+         $('.userManagementButton').click(function(){
+             $('.contentVariable').html("")
+             console.log($('.contentVariable').html($('.userManagement').html()));
+         })
+        // Gestion des livraisons
+         $('.deliverManagementButton').click(function(){
+             $('.contentVariable').html("")
+             console.log($('.contentVariable').html($('.deliverManagement').html()));
+         })
+        // Gestion des incidents
+         $('.incidentManagementButton').click(function(){
+             $('.contentVariable').html("")
+             console.log($('.contentVariable').html($('.incidentManagement').html()));
+         })
+        // Gestion des véhicules
+         $('.vehicleManagementButton').click(function(){
+             $('.contentVariable').html("")
+             console.log($('.contentVariable').html($('.vehicleManagement').html()));
+         })
+       })
+   </script>
+{% endblock %}

@@ -18,7 +18,7 @@
     <a class="divOption col-md-12 boutton finishDayButton" href="{{path('finish')}}">J'ai fini ma journée</a>
   </div>
 </center>
-<div class="contentVariable"></div>
+<div class="contentVariableAdmin"></div>
 <div class="startMyDay">
 {{ form_start(form) }}
 {{ form_end(form)}}
@@ -58,23 +58,23 @@
        $(document).ready(function(){
         // Commencer ma journée
          $('.startMyDayButton').click(function(){
-             $('.contentVariable').html("")
-             console.log($('.contentVariable').html($('.startMyDay').html()));
+             $('.contentVariableAdmin').html("")
+             console.log($('.contentVariableAdmin').html($('.startMyDay').html()));
          })
         // Faire un pointage
          $('.makeScoreButton').click(function(){
-             $('.contentVariable').html("")
-             console.log($('.contentVariable').html($('.makeScore').html()));
+             $('.contentVariableAdmin').html("")
+             console.log($('.contentVariableAdmin').html($('.makeScore').html()));
          })
         // Declarer un incident
          $('.reportIncidentButton').click(function(){
-             $('.contentVariable').html("")
-             console.log($('.contentVariable').html($('.reportIncident').html()));
+             $('.contentVariableAdmin').html("")
+             console.log($('.contentVariableAdmin').html($('.reportIncident').html()));
          })
         // Liste de mes tournées
          $('.tourListButton').click(function(){
-             $('.contentVariable').html("")
-             console.log($('.contentVariable').html($('.tourList').html()));
+             $('.contentVariableAdmin').html("")
+             console.log($('.contentVariableAdmin').html($('.tourList').html()));
          })
        })
    </script>
