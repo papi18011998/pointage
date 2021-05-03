@@ -13,6 +13,7 @@ use App\Form\IncidentType;
 use App\Form\PointageType;
 use App\Entity\Utilisateur;
 use App\Form\UtilisateurType;
+use App\Form\UtililisateurType;
 use App\Repository\DepartRepository;
 use App\Repository\PointageRepository;
 use App\Repository\VehiculeRepository;
@@ -59,9 +60,14 @@ class UtilisateurController extends AbstractController
     /**
      * @Route("/admin", name="admin")
      */
-    public function admin(){
+    public function admin(Utilisateur $utilisateur = null){
         $this->denyAccessUnlessGranted('ROLE_ADMIN',null,"Vos droits ne sont pas suffisants pour acceder à cette partie");
-        return $this->render('utilisateur/admin.html.twig');
+        if (!$utilisateur) {
+            $utilisateur = new Utilisateur();
+        }
+        // Création du formulaire d'ajout d'utilisateur
+        $form = $this->createForm(UtililisateurType::class,$utilisateur);
+        return $this->render('utilisateur/admin.html.twig',['formAddUser'=>$form->createView()]);
     }
     //----------------------------------Espace réservé au chauffeur------------------------------------//
     /**

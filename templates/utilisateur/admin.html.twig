@@ -20,7 +20,10 @@
     <div class="divOption col-md-12 boutton ListUser">Liste des utilisateurs</div>
 </div>
 <div id="userManagementContentVariable"></div>
-<div id="formAddUser">1</div>
+<div id="formAddUser">
+{{ form_start(formAddUser) }}
+{{ form_end(formAddUser) }}
+</div>
 <div id="tableListUser">2</div>
 </div>
 {# Menu de gestion des incidents #}
@@ -30,6 +33,8 @@
     <div class="divOption col-md-12 boutton ListIncident">Liste des incidents</div>
 </div>
 <div id="IncidentManagementContentVariable"></div>
+<div id="formAddIncident">5</div>
+<div id="tableListIncident">6</div>
 </div>
 {# Menu de gestion des livraisons #}
 <div class="deliverManagement">
@@ -38,6 +43,8 @@
     <div class="divOption col-md-12 boutton ListDeliver">Liste des livraisons</div>
 </div>
 <div id="DeliverManagementContentVariable"></div>
+<div id="formAddDeliver">1</div>
+<div id="tableListDeliver">2</div>
 </div>
 {# Menu de gestion des vehicules #}
 <div class="vehicleManagement">
@@ -46,8 +53,11 @@
     <div class="divOption col-md-12 boutton ListVehicle">Liste des véhicules</div>
 </div>
 <div id="VehicleManagementContentVariable"></div>
+<div id="formAddVehicle">7</div>
+<div id="tableListVehicle">8</div>
 </div>
    <script>
+    // Code JavaScript pour le menu
        $(document).ready(function(){
         // Gestion des utilisateurs
          $('.userManagementButton').click(function(){
@@ -55,26 +65,47 @@
              console.log($('.contentVariable').html($('.userManagement').html()));
          //Menu gestion utlisateur
          $('.addUser').click(function(){
-             alert("Test")
+            console.log($('#userManagementContentVariable').html($('#formAddUser').html()));
          })
          $('.ListUser').click(function(){
-             alert("Test")
+            console.log($('#userManagementContentVariable').html($('#tableListUser').html()));
          })
          })
         // Gestion des livraisons
          $('.deliverManagementButton').click(function(){
              $('.contentVariable').html("")
              console.log($('.contentVariable').html($('.deliverManagement').html()));
+           //Menu gestion des livraisons
+            $('.addDeliver').click(function(){
+                console.log($('#DeliverManagementContentVariable').html($('#formAddDeliver').html()));
+            })
+            $('.ListDeliver').click(function(){
+                 console.log($('#DeliverManagementContentVariable').html($('#tableListDeliver').html()));
+            })
          })
         // Gestion des incidents
          $('.incidentManagementButton').click(function(){
              $('.contentVariable').html("")
              console.log($('.contentVariable').html($('.incidentManagement').html()));
+            //Menu gestion des incidents
+            $('.addIncident').click(function(){
+                console.log($('#IncidentManagementContentVariable').html($('#formAddIncident').html()));
+            })
+            $('.ListIncident').click(function(){
+                 console.log($('#IncidentManagementContentVariable').html($('#tableListIncident').html()));
+            })            
          })
         // Gestion des véhicules
          $('.vehicleManagementButton').click(function(){
              $('.contentVariable').html("")
              console.log($('.contentVariable').html($('.vehicleManagement').html()));
+            //Menu gestion des véhicules
+            $('.addVehicle').click(function(){
+                console.log($('#VehicleManagementContentVariable').html($('#formAddVehicle').html()));
+            })
+            $('.ListVehicle').click(function(){
+                 console.log($('#VehicleManagementContentVariable').html($('#tableListVehicle').html()));
+            })            
          })
        })
    </script>

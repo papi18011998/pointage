@@ -86,7 +86,17 @@ body{
 } 
 .ListUser,.ListIncident,.ListDeliver,.ListVehicle{
     float: right;
-    width: 40%; 
+    width: 40%;
+}
+#formAddUser,#formAddDeliver,#formAddIncident,#formAddVehicle{
+    display:none;
+}
+#tableListUser,#tableListDeliver,#tableListIncident,#tableListVehicle{
+    display: none;
+}
+#userManagementContentVariable{
+    width: 80%;
+    float: left;
 }
 /*----------------------------------------Gestion de la responsivité de l'appli-------------------------------*/
 @media screen and (max-width: 480px) {
