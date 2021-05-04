@@ -8,6 +8,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class UtililisateurType extends AbstractType
 {
@@ -17,9 +19,10 @@ class UtililisateurType extends AbstractType
             ->add('prenom')
             ->add('nom')
             ->add('login')
-            ->add('password')
+            ->add('password',PasswordType::class,['attr'=>['class'=>"password"]])
             ->add('telephone')
             ->add('role',EntityType::class,['class'=>Role::class,'choice_label'=>'libelle'])
+            ->add('Démarrer',SubmitType::class,['label'=>'Ajouter l\'utilisateur'])
         ;
     }
 

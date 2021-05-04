@@ -22,6 +22,32 @@
 <div id="userManagementContentVariable"></div>
 <div id="formAddUser">
 {{ form_start(formAddUser) }}
+    <div class="col-md-12">
+        <div class="col-md-6 alignDiv">
+            {{ form_row(formAddUser.prenom,{'attr':{'placeholder':'Mettez le prénom de l\'utilisateur'}}) }}
+        </div>
+        <div class="col-md-6 alignDiv">
+            {{ form_row(formAddUser.nom,{'attr':{'placeholder':'Mettez le nom de l\'utilisateur'}}) }}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-6 alignDiv">
+            {{ form_row(formAddUser.login,{'attr':{'placeholder':'Mettez le login de l\'utilisateur'}}) }}
+        </div>
+        <div class="col-md-6 alignDiv">
+            {{ form_row(formAddUser.telephone,{'attr':{'placeholder':'Mettez le téléphone de l\'utilisateur'}}) }}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-6 alignDiv">
+            {{ form_row(formAddUser.password,{'attr':{'placeholder':'Mettez le mot de passe de l\'utilisateur'}}) }}
+            <span class="display">Afficher le mot de passe</span>
+            <span class="undisplay">Afficher le mot de passe</span>
+        </div>
+        <div class="col-md-6 alignDiv">
+            {{ form_row(formAddUser.role,{'attr':{'placeholder':'Mettez le rôle de l\'utilisateur'}}) }}
+        </div>
+    </div>
 {{ form_end(formAddUser) }}
 </div>
 <div id="tableListUser">2</div>
@@ -55,8 +81,11 @@
 <div id="VehicleManagementContentVariable"></div>
 <div id="formAddVehicle">7</div>
 <div id="tableListVehicle">8</div>
+<input type ="text" id="pass"/>
 </div>
    <script>
+    password = document.getElementById('password')
+    password.style.color = "blue";
     // Code JavaScript pour le menu
        $(document).ready(function(){
         // Gestion des utilisateurs

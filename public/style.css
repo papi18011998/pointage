@@ -88,7 +88,7 @@ body{
     float: right;
     width: 40%;
 }
-#formAddUser,#formAddDeliver,#formAddIncident,#formAddVehicle{
+#formAddUser,#formAddDeliver,#formAddIncident,#formAddVehicle,.undisplay{
     display:none;
 }
 #tableListUser,#tableListDeliver,#tableListIncident,#tableListVehicle{
@@ -98,6 +98,10 @@ body{
     width: 80%;
     float: left;
 }
+.alignDiv{
+    float: left;
+}
+
 /*----------------------------------------Gestion de la responsivité de l'appli-------------------------------*/
 @media screen and (max-width: 480px) {
     .top{
